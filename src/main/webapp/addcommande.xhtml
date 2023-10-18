@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>ajout commande</title>
+        
+        <!-- Événement de pré-rendu de la vue -->
+        <f:event listener="#{commandeManagedBean.init()}" type="preRenderView" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+        <style>
+            .container {
+                width: 100%;
+                background-size: cover;
+                margin-top: -500px;
+            }
+
+            .form-container {
+                margin-top: 0;
+            }
+
+            .form-group label {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .btn-save {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+
+            .header {
+                font-size: 24px;
+                font-weight: bold;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="background-color: #D7DBDD; margin-top: 0;">
+        <!-- Inclusion de la barre de navigation -->
+        <ui:include src="navbar.xhtml" />
+        
+        <h:form>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xs-12 col-sm-8 col-md-6">
+                        <div class="card">
+                            <div class="card-header" style="background-color:#34495E;color:#fff;">Ajouter commande</div>
+                            <div class="card-body form-container">
+                                <!-- Champ pour le code d'article -->
+                                <div class="form-group">
+                                    <h:outputLabel value="CodeArt:" for="codeArt" />
+                                    <h:selectOneMenu value="#{productManagedBean.product.codeArt}" id="codeArt" required="true"  class="form-control">
+                                        <f:selectItems value="#{commandeManagedBean.productList}" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <!-- Champ pour la quantité -->
+                                <div class="form-group">
+                                    <label class="control-label">Quantite:</label>
+                                    <h:inputText value="#{commandeManagedBean.commande.qteCommande}" class="form-control #{commandeManagedBean.errorClass1('qteCommande')}" />
+                                </div>
+                                <!-- Champ pour la date -->
+                                <div class="form-group">
+                                    <label class="control-label">Date:</label><br />
+                                    <p:calendar value="#{commandeManagedBean.commande.datePrevueLivraison}" pattern="yyyy/MM/dd" mindate="#{commandeManagedBean.currentDate}" />
+                                </div>
+                                <!-- Bouton pour enregistrer -->
+                                <h:commandButton class="btn btn-primary btn-save" action="#{commandeManagedBean.saveCommande()}" value="Save" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>

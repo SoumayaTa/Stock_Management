@@ -1,0 +1,276 @@
+<!-- Déclaration du type de document -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<!-- Métadonnées de la page -->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<!-- Lien vers la feuille de style DataTables -->
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.css" />
+
+		<!-- Lien vers la feuille de style Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+		<!-- Scripts JavaScript -->
+		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$('.myTable').DataTable();
+			});
+		</script>
+		
+		<!-- Styles CSS personnalisés -->
+		<style>
+			body {
+				margin: 0;
+			}
+			
+			.button {
+				display: inline-block;
+				padding: 10px 20px;
+				background-color: #4CAF50;
+				color: white;
+				text-decoration: none;
+				border-radius: 4px;
+				transition: background-color 0.3s ease;
+			}
+
+			.button:hover {
+				background-color: #45a049;
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+
+			th, td {
+				padding: 8px;
+				text-align: center;
+				border-bottom: 1px solid #34495E;
+			}
+
+			th {
+				background-color: #34495E;
+				color: #fff;
+				border-color: #34495E;
+			}
+
+			.confirmation-link {
+				color: #337ab7;
+				text-decoration: none;
+			}
+
+			.confirmation-link:hover {
+				text-decoration: underline;
+			}
+
+			.back-button {
+				margin-top: 20px;
+			}
+
+			.pdf-button {
+				margin-bottom: 20px;
+			}
+
+			.action-buttons {
+				display: flex;
+				gap: 10px;
+			}
+
+			.myTable {
+				margin-top: 0;
+				margin-bottom: 0;
+				margin-left: 50px;
+				margin-right: 50px;
+			}
+
+			.main-container {
+				margin-top: -550px; /* Ajustez cette valeur en fonction de l'espace à supprimer */
+				width: 100%;
+				background-size: cover;
+				margin-bottom: 20px;
+			}
+
+			.pdf-button {
+				padding: 10px 20px;
+				background-color: #17a2b8;
+				color: #fff;
+				border: none;
+				border-radius: 15px;
+				transition: background-color 0.3s ease;
+				cursor: pointer;
+				text-decoration: none; /* Supprime le soulignement du texte */
+			}
+
+			.pdf-button:hover {
+				background-color: #138496;
+			}
+
+			.bt {
+				padding: 10px 20px;
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				border-radius: 9px;
+				transition: background-color 0.3s ease;
+				cursor: pointer;
+				width: 10%;
+				display: flex;
+				justify-content: center;
+			}
+
+			.bt:hover {
+				background-color: #0069d9;
+			}
+
+			.confirmation-box {
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background-color: #fff;
+				border-radius: 4px;
+				padding: 20px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+				z-index: 9999;
+			}
+
+			.confirmation-box h4 {
+				margin-top: 0;
+				margin-bottom: 10px;
+			}
+
+			.confirmation-box p {
+				margin-top: 0;
+				margin-bottom: 20px;
+			}
+
+			.confirmation-box .btn-container {
+				text-align: right;
+			}
+
+			.confirmation-box .btn-container button {
+				margin-left: 10px;
+			}
+
+			.btn-warning {
+				padding: 5px 20px;
+				background-color: #ffc107;
+				color: #fff;
+				border: none;
+				border-radius: 9px;
+				transition: background-color 0.3s ease;
+				cursor: pointer;
+				text-decoration: none;
+			}
+
+			.btn-danger {
+				padding: 5px 20px;
+				background-color: #dc3545;
+				color: #fff;
+				border: none;
+				border-radius: 9px;
+				transition: background-color 0.3s ease;
+				cursor: pointer;
+				text-decoration: none;
+			}
+
+			.btn-warning:hover {
+				background-color: #e0a800;
+			}
+
+			.btn-danger:hover {
+				background-color: #c82333;
+			}
+
+			.edit-delete-button {
+				margin-right: 20px;
+			}
+		</style>
+   
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+		<f:metadata>
+		<!-- Événement pour tester si un utilisateur est connecté -->
+			<f:event type="preRenderView" listener="#{loginManagedBean.checkLoggedIn}" />
+			<!-- Événement de pré-rendu de la vue -->
+			<f:event listener="#{commandeManagedBean.afficher()}" type="preRenderView" />
+		</f:metadata>
+	</h:head>
+<body  style="background-color: #D7DBDD;">
+		<!-- Inclusion de la barre de navigation -->
+		<ui:include src="navbar.xhtml" />
+
+		<!-- Conteneur principal -->
+		<div class="main-container">
+			<!-- Formulaire -->
+			<h:form id="productForm">
+				<!-- Bouton pour enregistrer en tant que PDF -->
+				<h:commandLink action="#{commandeManagedBean.generatePDF()}" value="Enregistrer comme PDF" class="btn btn-info pdf-button"></h:commandLink>
+				<br/>
+
+				<!-- Tableau de données -->
+				<h:dataTable class="myTable" var="commandes" value="#{commandeManagedBean.commandes}" border="1">
+					<h:column>
+						<f:facet name="header">Code article</f:facet>
+						#{commandes.codeArt}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Quantité</f:facet>
+						#{commandes.qteCommande}
+					</h:column>
+					<!-- ... Autres colonnes du tableau ... -->
+					<h:column>
+						<f:facet name="header">État</f:facet>
+						<h:outputText value="#{commandeManagedBean.verifierDateCommande()}" />
+						#{commandes.etat}
+					</h:column>
+					<!-- ... Autres colonnes du tableau ... -->
+					<h:column>
+						<f:facet name="header"></f:facet>
+						<h:commandLink action="#{commandeManagedBean.edit(commandes)}" value="Modifier" onclick="return confirm('Are you sure ?')" class="btn btn-warning edit-delete-button"></h:commandLink>
+						<h:commandLink action="#{commandeManagedBean.delete(commandes)}" value="Supprimer" onclick="return confirm('Are you sure ?')" class="btn btn-danger edit-delete-button"></h:commandLink>
+					</h:column>
+				</h:dataTable>
+
+				<!-- Bouton pour ajouter une commande -->
+				<button class="btn btn-primary" type="button" onclick="redirectToPage()">Ajouter</button>
+			</h:form>
+		</div>
+
+		<script>
+			// Rediriger vers la page souhaitée
+			function redirectToPage() {
+				window.location.href = "addcommande.xhtml";
+			}
+		</script>
+
+		<!-- Script JS pour la gestion des notifications -->
+		<script>
+			$(document).ready(function() {
+				// Gérer l'icône de notification
+				$('#notification-icon').click(function() {
+					if (#{commandeManagedBean.commandeRecue}) {
+						alert('La commande a été reçue !');
+
+						$(this).removeClass('has-notification');
+						$('#notification-text').text('Pas de notification');
+					} else {
+						alert('Pas de notification');
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

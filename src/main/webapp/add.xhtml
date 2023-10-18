@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <f:metadata>
+        <!-- Événement de pré-rendu de la vue -->
+        <f:event type="preRenderView" listener="#{loginManagedBean.checkLoggedIn}" />
+    </f:metadata>
+    <title>Ajout produit</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    
+    <!-- Script jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Styles CSS personnalisés -->
+    <style>
+        .error-field {
+            border: 3px solid red !important;
+        }
+        
+        .container {
+            margin-top: 0;
+            width: 100%;
+            background-size: cover;
+            margin-bottom: 20px;
+        }
+        
+        .container.form-container {
+            margin-top: -550px;
+        }
+        
+        .success-message {
+            color: green;
+        }
+        
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body style="background-color: #D7DBDD; margin-top: 0;">
+    <!-- Inclusion de la barre de navigation -->
+    <ui:include src="navbar.xhtml" />
+  
+    <div class="container d-flex justify-content-center align-items-center form-container">
+        <div class="col-md-6 col-xs-12 col-sm-6 col-md-offset-3">
+            <div class="card">
+                <!-- Affichage des messages de succès et d'erreur -->
+                <h:messages globalOnly="true" styleClass="messages" infoStyleClass="success-message" errorStyleClass="error-message" />
+
+                <div class="card-header" style="background-color:#34495E;color:#fff;">Ajouter produit</div>
+                <div class="card-body">
+                    <h:form>
+                        <!-- Champ pour le nom du produit -->
+                        <div class="form-group">
+                            <label class="control-label">Nom du produit:</label>
+                            <h:inputText value="#{productManagedBean.product.nomArt}" class="form-control #{productManagedBean.errorClass1('nomArt')}" required="true"></h:inputText>
+                        </div>
+                        <!-- Champ pour la description du produit -->
+                        <div class="form-group">
+                            <label class="control-label">Description:</label>
+                            <h:inputText value="#{productManagedBean.product.descArt}" class="form-control #{productManagedBean.errorClass1('descArt')}" required="true"></h:inputText>
+                        </div>
+                        <!-- Champ pour le prix du produit -->
+                        <div class="form-group">
+                            <label class="control-label">Prix du produit:</label>
+                            <h:inputText value="#{productManagedBean.product.prixArt}" class="form-control #{productManagedBean.errorClass1('prixArt')}"></h:inputText>
+                        </div>
+                        <!-- Champ pour la quantité du produit -->
+                        <div class="form-group">
+                            <label class="control-label">Quantite:</label>
+                            <h:inputText value="#{productManagedBean.product.qteArt}" class="form-control #{productManagedBean.errorClass1('qteArt')}" required="true"></h:inputText>
+                        </div>
+                        <!-- Bouton pour enregistrer le produit -->
+                        <h:commandButton class="btn btn-primary btn-save" action="#{productManagedBean.save()}" value="Enregistrer"></h:commandButton>
+                        
+                        <script>
+                            // Récupérer les messages JSF côté serveur et les afficher avec les styles appropriés
+                            $(document).ready(function() {
+                                var successMessage = $('.messages .success-message');
+                                var errorMessage = $('.messages .error-message');
+
+                                if (successMessage.length > 0) {
+                                    showSuccessMessage(successMessage.text());
+                                }
+
+                                if (errorMessage.length > 0) {
+                                    showErrorMessage(errorMessage.text());
+                                }
+                            });
+                        </script>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

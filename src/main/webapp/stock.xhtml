@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.css" />
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <f:metadata>
+        <f:event listener="#{productManagedBean.onload()}" type="preRenderView" /> <!-- Événement JSF pour appeler une méthode lors du rendu de la vue -->
+        <f:event type="preRenderView" listener="#{loginManagedBean.checkLoggedIn}" /> <!-- Événement JSF pour vérifier si l'utilisateur est connecté -->
+    </f:metadata>
+    <style>
+
+    body {
+        margin:0;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #45a049;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #34495E;
+    }
+
+    th {
+        background-color: #142440;
+        color: #fff;
+        border-color: #34495E;
+    }
+
+    .confirmation-link {
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    .confirmation-link:hover {
+        text-decoration: underline;
+    }
+
+    .back-button {
+        margin-top: 20px;
+    }
+
+    .pdf-button {
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .myTable {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .main-container {
+        margin-top: -600px; 
+        width: 100%;
+        background-size: cover;
+        margin-bottom: 20px;
+    }
+
+    .pdf-button {
+        padding: 10px 20px;
+        background-color: #17a2b8;
+        color: #fff;
+        border: none;
+        border-radius: 15px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .pdf-button:hover {
+        background-color: #138496;
+    }
+
+    .bt {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 9px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        width: 10%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .bt:hover {
+        background-color: #0069d9;
+    }
+
+    .confirmation-box {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border-radius: 4px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+
+    .confirmation-box h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .confirmation-box p {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .confirmation-box .btn-container {
+        text-align: right;
+    }
+
+    .confirmation-box .btn-container button {
+        margin-left: 10px;
+    }
+
+    .btn-warning {
+        padding: 10px 20px;
+        background-color: #ffc107;
+        color: #fff;
+        border: none;
+        border-radius: 9px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-danger {
+        padding: 10px 20px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 9px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+        
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('.myTable').DataTable(); // Initialisation du plugin DataTables
+        });
+    </script>
+    
+</head>
+<ui:include src="navbar.xhtml" />
+
+<body style="background-color:#D7DBDD;" class="main-body">
+    <div class="main-container">
+        <h:form id="productForm">
+            <h:panelGroup rendered="#{not empty facesContext.messageList}">
+                <div class="warning">
+                    #{facesContext.messageList[0].detail} <!-- Afficher un message d'avertissement -->
+                </div>
+            </h:panelGroup>
+            <br/>
+            <h:commandLink action="#{productManagedBean.generatePDF()}" value="Enregistrer comme PDF" class="btn btn-info pdf-button" /> <!-- Lien pour générer un PDF -->
+            <br/>
+            <h:dataTable class="myTable" var="product" value="#{productManagedBean.products}" border="1"> <!-- Tableau pour afficher les produits -->
+                <h:column>
+                    <f:facet name="header">Code Article</f:facet>
+                    #{product.codeArt} <!-- Afficher le code d'article -->
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Nom</f:facet>
+                    #{product.nomArt} <!-- Afficher le nom d'article -->
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Description</f:facet>
+                    #{product.descArt} <!-- Afficher la description d'article -->
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Prix</f:facet>
+                    #{product.prixArt} DH <!-- Afficher le prix d'article -->
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Quantité</f:facet>
+                    #{product.qteArt} <!-- Afficher la quantité d'article -->
+                </h:column>
+                <h:column>
+                    <f:facet name="header"></f:facet>
+                    <div class="action-buttons">
+                        <h:commandLink action="#{productManagedBean.edit(product)}" value="Modifier" onclick="return confirm('Are you sure ?')" class="btn btn-warning" /> <!-- Lien pour modifier le produit -->
+                        <h:commandLink action="#{productManagedBean.delete(product)}" value="Supprimer" onclick="return confirm('Are you sure ?')" class="btn btn-danger" /> <!-- Lien pour supprimer le produit -->
+                    </div>
+                </h:column>
+            </h:dataTable>
+            <h:messages globalOnly="true" /> <!-- Afficher les messages globaux -->
+            <button class="bt" type="button" onclick="redirectToPage()">ajouter</button> <!-- Bouton pour rediriger vers une page -->
+        </h:form>
+    </div>
+    <script>
+        function redirectToPage() {
+            // Redirige vers la page souhaitée
+            window.location.href = "add.xhtml";
+        }
+    </script>
+    
+</body>
+</html>

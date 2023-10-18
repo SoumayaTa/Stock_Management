@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<head>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginManagedBean.checkLoggedIn}" />
+    </f:metadata>
+
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table td {
+            padding: 5px;
+        }
+
+        .spacer {
+            margin: 10px 0;
+        }
+
+        .save-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .container {
+            margin-top: -550px; /* Ajustez cette valeur en fonction de l'espace à supprimer */
+            width: 100%;
+            background-size: cover;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .error-field {
+            border: 3px solid red !important;
+        }
+    </style>
+    <title>Editer un produit</title>
+</head>
+<ui:include src="navbar.xhtml" />
+<body style="background-color: #D7DBDD;">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-8 col-md-6">
+                <div class="card">
+                    <!-- En-tête de la carte -->
+                    <div class="card-header" style="background-color:#34495E;color:#fff;">Editer produit</div>
+
+                    <div class="card-body">
+                        <h:form>
+                            <div class="form-group">
+                                <label class="control-label">Code d'Article:</label>
+                                <!-- Champ d'entrée pour le code d'article -->
+                                <input type="text" id="codeArt" class="form-control" value="#{productManagedBean.product.codeArt}" disabled="disabled" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Quantite:</label>
+                                <!-- Champ d'entrée pour la quantité d'article -->
+                                <h:inputText id="qteArt" value="#{productManagedBean.product.qteArt}" class="form-control #{productManagedBean.errorClass('qteArt')}" required="true" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Nom:</label>
+                                <!-- Champ d'entrée pour le nom de l'article -->
+                                <h:inputText value="#{productManagedBean.product.nomArt}" class="form-control  #{productManagedBean.errorClass('nomArt')}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Description:</label>
+                                <!-- Champ d'entrée pour la description de l'article -->
+                                <h:inputText value="#{productManagedBean.product.descArt}" class="form-control #{productManagedBean.errorClass('descArt')}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Prix:</label>
+                                <!-- Champ d'entrée pour le prix de l'article -->
+                                <h:inputText value="#{productManagedBean.product.prixArt}" class="form-control #{productManagedBean.errorClass('prixArt')}" />
+                            </div>
+
+                            <!-- Bouton de sauvegarde -->
+                            <h:commandButton class="btn btn-primary save-button" action="#{productManagedBean.update()}" value="Enregistrer" />
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

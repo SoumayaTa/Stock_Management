@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Page de connexion</title>
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/Style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" />
+  
+  <!-- Styles CSS -->
+  <style>
+    * {
+      font-family: 'poppins', sans-serif;
+    }
+
+    body {
+      background-image: url("resources/images/3.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .container {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      padding: 0 15px;
+    }
+
+    header {
+      color: #b30000;
+      font-size: 40px;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0 10px 0;
+      width: 100%;
+    }
+
+    .input-field .input {
+      height: 45px;
+      width: 87%;
+      border: none;
+      border-radius: 30px;
+      color: black;
+      font-size: 15px;
+      padding: 0 0 0 45px;
+      background: rgba(255,255,255,0.7);
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    i {
+      position: relative;
+      top: -1px;
+      left:-270px;
+      color: black;
+      font-size: 20px;
+    }
+
+    ::-webkit-input-placeholder {
+      color: black;
+    }
+
+    .submit {
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      height: 45px;
+      outline: none;
+      width: 87%;
+      color: #fff;
+      background: #b30000;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit:hover {
+      box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="container">
+      <!-- Logo -->
+      <img src="resources/images/2.jpeg" width="100px" height="100px" style="display: block; margin: 0 auto; border-radius: 50%;" />
+
+      <BR />
+
+      <h:form id="loginForm">
+        <div class="top">
+          <header>
+            Administrateurs
+          </header>
+        </div>
+
+        <div class="input-field">
+          <!-- Champ de saisie pour le nom d'utilisateur -->
+          <h:inputText id="nom" value="#{loginManagedBean.nom}" placeholder="nom d'utilisateur" class="input" />
+          <i class='bx bx-user'></i>
+        </div>
+        <h:message for="nom" style="color: red;" />
+
+        <div class="input-field">
+          <!-- Champ de saisie pour le mot de passe -->
+          <h:inputSecret id="password" value="#{loginManagedBean.password}" class="input" placeholder="mot de passe" />
+          <i class='bx bx-lock-alt'></i>
+        </div>
+        <h:message for="password" style="color: red;" />
+
+        <div class="input-field">
+          <!-- Bouton de connexion -->
+          <h:commandButton id="loginBtn" class="submit" action="#{loginManagedBean.login()}" value="Connexion" />
+        </div>
+        <h:message for="loginBtn" style="color: red;" />
+      </h:form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

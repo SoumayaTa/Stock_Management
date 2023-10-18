@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Éditer commande</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+           
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+        .error-field {
+            border: 3px solid red !important;
+        }
+        .container {
+        margin-top: 0;
+        width: 100%;
+        background-size: cover;
+        margin-bottom: 20px;
+     }
+      .container.form-container {
+        margin-top: -550px;
+     }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginManagedBean.checkLoggedIn}" />
+    </f:metadata>
+</h:head>
+
+<body style="background-color: #D7DBDD;">
+    <ui:include src="navbar.xhtml" /> <!-- Inclure un fichier "navbar.xhtml" -->
+    <f:view>
+        <h:panelGroup rendered="#{not empty facesContext.messageList}">
+            <div class="warning"></div> <!-- Div pour afficher les messages d'avertissement -->
+        </h:panelGroup>
+        <p class="spacer"></p> <!-- Paragraphe vide pour espacement -->
+        <div class="container  form-container "> <!-- Conteneur principal -->
+            <div class="col-md-6-xm-12 col-sm-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header" style="background-color:#34495E;color:#fff;">Edit commande</div> <!-- En-tête de la carte -->
+                    <div class="card-body">
+                        <h:form>
+                            <div class="form-group">
+                                <label for="codeArt">Code d'Article:</label>
+                                <input type="text" id="codeArt" class="form-control" value="#{commandeManagedBean.commande.codeArt}" disabled="disabled" /> <!-- Champ d'entrée pour le code d'article -->
+                            </div>
+                            <div class="form-group">
+                                <label for="qteCommande">Quantité:</label>
+                                <h:inputText id="qteCommande" value="#{commandeManagedBean.commande.qteCommande}" class="form-control #{commandeManagedBean.errorClass('qteCommande')}" /> <!-- Champ d'entrée pour la quantité de commande -->
+                            </div>
+                            <div class="form-group">
+                                <label for="datePrevueLivraison">Date:</label><br />
+                                <p:calendar id="datePrevueLivraison" value="#{commandeManagedBean.commande.datePrevueLivraison}" pattern="yyyy/MM/dd" mindate="#{commandeManagedBean.currentDate}" /> <!-- Calendrier pour sélectionner une date -->
+                            </div>
+                            <h:commandButton action="#{commandeManagedBean.update()}" value="Save" class="btn btn-primary" /> <!-- Bouton pour enregistrer -->
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:view>
+</body>
+</html>
